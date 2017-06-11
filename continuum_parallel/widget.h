@@ -31,7 +31,7 @@ public:
 //    Processing *process=new Processing();
    void drawImage();
    void drawCircle(QImage* img,double x,double y);
-
+   void drawText(QImage* img, double x, double y, int num);
 
     unsigned char **addrL,**addrR,**addrM;
     Processing *process;

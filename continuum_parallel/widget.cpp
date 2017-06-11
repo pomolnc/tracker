@@ -88,10 +88,12 @@ Xform3D* Marker2CurrCameraXf = NULL;
         drawCircle(&imgR,x[1], y[1]);
 //        drawCircle(&imgM,x[2], y[2]);
 //        cout<<x[2]<<' '<<y[2]<<endl;//the  XY-Component of the 2D back projected XP on middle image is allways zero.
+        drawText(&imgL,x[0], y[0],XPNum);
+        drawText(&imgR,x[1], y[1],XPNum);
     }
 }
 
-
+//drawText(&imgL,100, 100,XPNum);
      ui->label_L->setPixmap(QPixmap::fromImage(imgL.scaled(ui->label_L->width(),ui->label_L->height())));
      ui->label_R->setPixmap(QPixmap::fromImage(imgR.scaled(ui->label_R->width(),ui->label_R->height())));
      ui->label_M->setPixmap(QPixmap::fromImage(imgM.scaled(ui->label_M->width(),ui->label_M->height())));
@@ -102,11 +104,28 @@ Xform3D* Marker2CurrCameraXf = NULL;
 
 void Widget::drawCircle(QImage* img,double x,double y){
     QPainter painter(img);
-    QPen pen(Qt::green,6,Qt::SolidLine);
+    QPen pen(Qt::green,4,Qt::SolidLine);
     painter.setPen(pen);
-    double radius= 20;
-//    painter.drawEllipse(x+ radius,y+radius,radius,radius);
+    double radius= 15;
     painter.drawEllipse(x-radius/2,y-radius/2,radius,radius);
+}
+
+void Widget::drawText(QImage* img,double x,double y,int num){
+    QPainter painter(img);
+//    QPen pen(Qt::green,2,Qt::SolidLine);
+    QPen pen(Qt::green,2);
+    painter.setPen(pen);
+//    double radius= 20;
+//    QRectF rect(x+2, y, 200 ,300 );
+//    painter.drawText(rect,Qt::AlignLeft,tr("#"+num));
+    QFont font("Arial",20,QFont::Bold,true);
+    painter.setFont(font);
+
+    QString strNum;
+    QString text="#"+strNum.setNum(num);
+     QByteArray ba= text.toLatin1();
+     const char *c_text = ba.data();
+     painter.drawText(x+10,y+5,tr(c_text));
 
 }
 
