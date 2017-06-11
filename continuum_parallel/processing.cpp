@@ -405,13 +405,16 @@ void Processing::showIdentifiedXPoints()
     double radius = 5;
     // here we need the left side presentation: coordinates in sensor space, distances etc
     Xform3D* Marker2CurrCameraXf = NULL;
-    if(this->isShowingPositions)
+//    if(this->isShowingPositions)
+        if(1)
     {
         for (XPNum = 1; XPNum <= xpointsCollection->count(); XPNum++)
         {
             XP = new MTXPoint(xpointsCollection->itemI(XPNum));
             XP->Position2D(&x[0], &y[0], &x[1], &y[1], &x[2], &y[2]);
+            cout<<x[1]<<' '<<y[1]<<endl;
             XP->Position3D(&x3, &y3, &z3);
+            cout<<x3<<' '<<y3<<' '<<z3<<endl;
             XP->setIndex(XPNum);
 
             drawCircle(0, x[0], y[0], radius, 1.0, 0, 0, 0xFFFF);
