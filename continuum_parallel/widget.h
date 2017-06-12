@@ -35,9 +35,10 @@ public:
    void displayData();
    double filter(double input);
    void filterProcess();
-   double targetPosition();
-   double basePosition();
+   void targetPosition();
+   void basePosition();
    double vecLen(double x1,double y1,double z1,double x2,double y2,double z2);
+   double dotproduct(double x1,double y1,double z1,double x2,double y2,double z2);
 
 
     unsigned char **addrL,**addrR,**addrM;
