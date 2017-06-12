@@ -1,6 +1,9 @@
 #include "widget.h"
 #include "ui_widget.h"
 #include <QPainter>
+#include <QDir>
+#include <QTextStream>
+#include <QDataStream>
 
 #include <string.h>
 #include "Marker.h"
@@ -246,9 +249,9 @@ void Widget::targetPosition(){
     int index_3_in=ui->comboBox_3_in->currentIndex();
     int index_3_out=ui->comboBox_3_out->currentIndex();
 
-    double tar_abs_position_x= (pointX[index_1_in+1]+pointX[index_2_in+1]+pointX[index_3_in+1]+pointX[index_1_out+1]+pointX[index_2_out+1]+pointX[index_3_out+1])/6;
-    double tar_abs_position_y= (pointY[index_1_in+1]+pointY[index_2_in+1]+pointY[index_3_in+1]+pointY[index_1_out+1]+pointY[index_2_out+1]+pointY[index_3_out+1])/6;
-    double tar_abs_position_z= (pointZ[index_1_in+1]+pointZ[index_2_in+1]+pointZ[index_3_in+1]+pointZ[index_1_out+1]+pointZ[index_2_out+1]+pointZ[index_3_out+1])/6;
+    tar_abs_position_x= (pointX[index_1_in+1]+pointX[index_2_in+1]+pointX[index_3_in+1]+pointX[index_1_out+1]+pointX[index_2_out+1]+pointX[index_3_out+1])/6;
+    tar_abs_position_y= (pointY[index_1_in+1]+pointY[index_2_in+1]+pointY[index_3_in+1]+pointY[index_1_out+1]+pointY[index_2_out+1]+pointY[index_3_out+1])/6;
+    tar_abs_position_z= (pointZ[index_1_in+1]+pointZ[index_2_in+1]+pointZ[index_3_in+1]+pointZ[index_1_out+1]+pointZ[index_2_out+1]+pointZ[index_3_out+1])/6;
 
     double x_unit[3];
     double y_unit[3];
@@ -272,9 +275,10 @@ void Widget::targetPosition(){
     z_unit[2]=x_unit[3]* y_unit[1]-y_unit[3]* x_unit[1];
     z_unit[3]=x_unit[1]* y_unit[2]-y_unit[1]* x_unit[2];
 
-    double tar_rel_position_x=dotproduct(tar_abs_position_x-basePoint[1],tar_abs_position_y-basePoint[2],tar_abs_position_z-basePoint[3],x_unit[1],x_unit[2],x_unit[3]);
-    double tar_rel_position_y=dotproduct(tar_abs_position_x-basePoint[1],tar_abs_position_y-basePoint[2],tar_abs_position_z-basePoint[3],y_unit[1],y_unit[2],y_unit[3]);
-    double tar_rel_position_z=dotproduct(tar_abs_position_x-basePoint[1],tar_abs_position_y-basePoint[2],tar_abs_position_z-basePoint[3],z_unit[1],z_unit[2],z_unit[3]);
+    tar_rel_position_x=dotproduct(tar_abs_position_x-basePoint[1],tar_abs_position_y-basePoint[2],tar_abs_position_z-basePoint[3],x_unit[1],x_unit[2],x_unit[3]);
+    tar_rel_position_y=dotproduct(tar_abs_position_x-basePoint[1],tar_abs_position_y-basePoint[2],tar_abs_position_z-basePoint[3],y_unit[1],y_unit[2],y_unit[3]);
+    tar_rel_position_z=dotproduct(tar_abs_position_x-basePoint[1],tar_abs_position_y-basePoint[2],tar_abs_position_z-basePoint[3],z_unit[1],z_unit[2],z_unit[3]);
+
 
     QString strNum;
     QString text="Target_Position:["+strNum.setNum(tar_rel_position_x)+","+strNum.setNum(tar_rel_position_y)+","+strNum.setNum(tar_rel_position_z)+"]";
@@ -310,4 +314,112 @@ return sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)+(z1-z2)*(z1-z2));
 
 double Widget::dotproduct(double x1,double y1,double z1,double x2,double y2,double z2){
     return x1*x2+y1*y2+z1*z2;
+}
+
+void Widget::fileOperation(){
+    QDir d;
+    d.mkpath("C:/Program Files/ClaroNav/test");
+//    QFile file("C:/Program Files/ClaroNav/test/test.dat");
+//    file.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+//    QTextStream out(&file);
+////    QDataStream out(&file);
+////    out<<QString("test")<<"/n"<<(qint8)128;
+//    out<<1<<" "<<2<<endl<<3<<" "<<4;
+////    file.write("test \n test");
+//    file.close();
+    int index_x_in=ui->comboBox_x_in->currentIndex();
+    int index_x_out=ui->comboBox_x_out->currentIndex();
+    int index_y_in=ui->comboBox_y_in->currentIndex();
+    int index_y_out=ui->comboBox_y_out->currentIndex();
+
+    int index_1_in=ui->comboBox_1_in->currentIndex();
+    int index_1_out=ui->comboBox_1_out->currentIndex();
+    int index_2_in=ui->comboBox_2_in->currentIndex();
+    int index_2_out=ui->comboBox_2_out->currentIndex();
+    int index_3_in=ui->comboBox_3_in->currentIndex();
+    int index_3_out=ui->comboBox_3_out->currentIndex();
+
+    QFile file_x_in("C:/Program Files/ClaroNav/test/x_in.dat");
+    file_x_in.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_x_in(&file_x_in);
+    out_x_in<<pointX[index_x_in+1]<<" "<<pointY[index_x_in+1]<<" "<<pointZ[index_x_in+1]<<endl;
+    file_x_in.close();
+
+    QFile file_x_out("C:/Program Files/ClaroNav/test/x_out.dat");
+    file_x_out.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_x_out(&file_x_out);
+    out_x_out<<pointX[index_x_out+1]<<" "<<pointY[index_x_out+1]<<" "<<pointZ[index_x_out+1]<<endl;
+    file_x_out.close();
+
+    QFile file_y_in("C:/Program Files/ClaroNav/test/y_in.dat");
+    file_y_in.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_y_in(&file_y_in);
+    out_y_in<<pointX[index_y_in+1]<<" "<<pointY[index_y_in+1]<<" "<<pointZ[index_y_in+1]<<endl;
+    file_y_in.close();
+
+    QFile file_y_out("C:/Program Files/ClaroNav/test/y_out.dat");
+    file_y_out.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_y_out(&file_y_out);
+    out_y_out<<pointX[index_y_out+1]<<" "<<pointY[index_y_out+1]<<" "<<pointZ[index_y_out+1]<<endl;
+    file_y_out.close();
+
+    QFile file_1_in("C:/Program Files/ClaroNav/test/1_in.dat");
+    file_1_in.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_1_in(&file_1_in);
+    out_1_in<<pointX[index_1_in+1]<<" "<<pointY[index_1_in+1]<<" "<<pointZ[index_1_in+1]<<endl;
+    file_1_in.close();
+
+    QFile file_1_out("C:/Program Files/ClaroNav/test/1_out.dat");
+    file_1_out.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_1_out(&file_1_out);
+    out_1_out<<pointX[index_1_out+1]<<" "<<pointY[index_1_out+1]<<" "<<pointZ[index_1_out+1]<<endl;
+    file_1_out.close();
+
+    QFile file_2_in("C:/Program Files/ClaroNav/test/2_in.dat");
+    file_2_in.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_2_in(&file_2_in);
+    out_2_in<<pointX[index_2_in+1]<<" "<<pointY[index_2_in+1]<<" "<<pointZ[index_2_in+1]<<endl;
+    file_2_in.close();
+
+    QFile file_2_out("C:/Program Files/ClaroNav/test/2_out.dat");
+    file_2_out.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_2_out(&file_2_out);
+    out_2_out<<pointX[index_2_out+1]<<" "<<pointY[index_2_out+1]<<" "<<pointZ[index_2_out+1]<<endl;
+    file_2_out.close();
+
+    QFile file_3_in("C:/Program Files/ClaroNav/test/3_in.dat");
+    file_3_in.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_3_in(&file_3_in);
+    out_3_in<<pointX[index_3_in+1]<<" "<<pointY[index_3_in+1]<<" "<<pointZ[index_3_in+1]<<endl;
+    file_3_in.close();
+
+    QFile file_3_out("C:/Program Files/ClaroNav/test/3_out.dat");
+    file_3_out.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_3_out(&file_3_out);
+    out_3_out<<pointX[index_3_out+1]<<" "<<pointY[index_3_out+1]<<" "<<pointZ[index_3_out+1]<<endl;
+    file_3_out.close();
+
+    QFile file_base("C:/Program Files/ClaroNav/test/base.dat");
+    file_base.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_base(&file_base);
+    out_base<<basePoint[1]<<" "<<basePoint[2]<<" "<<basePoint[3]<<endl;
+    file_base.close();
+
+    QFile file_tar_abs("C:/Program Files/ClaroNav/test/tar_abs.dat");
+    file_tar_abs.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_tar_abs(&file_tar_abs);
+    out_tar_abs<<tar_abs_position_x<<" "<<tar_abs_position_y<<" "<<tar_abs_position_z<<endl;
+    file_tar_abs.close();
+
+    QFile file_tar_rel("C:/Program Files/ClaroNav/test/tar_rel.dat");
+    file_tar_rel.open(QIODevice::Text |QIODevice::WriteOnly|QIODevice::Append);
+    QTextStream out_tar_rel(&file_tar_rel);
+    out_tar_rel<<tar_rel_position_x<<" "<<tar_rel_position_y<<" "<<tar_rel_position_z<<endl;
+    file_tar_rel.close();
+
+}
+
+void Widget::on_pushButton_savedata_clicked()
+{
+    fileOperation();
 }

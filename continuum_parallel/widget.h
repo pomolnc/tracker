@@ -17,6 +17,7 @@
 
 #include <QWidget>
 #include <QTimer>
+#include <QDir>
 namespace Ui {
 class Widget;
 }
@@ -39,7 +40,7 @@ public:
    void basePosition();
    double vecLen(double x1,double y1,double z1,double x2,double y2,double z2);
    double dotproduct(double x1,double y1,double z1,double x2,double y2,double z2);
-
+   void fileOperation();
 
     unsigned char **addrL,**addrR,**addrM;
     Processing *process;
@@ -50,13 +51,21 @@ public:
     double* pointZ=new double[100];
     int PointNum;
     double* basePoint=new double[3];
-    double* targetPoint=new double[3];
+//    double* targetPoint=new double[3];
+    double tar_abs_position_x;
+    double tar_abs_position_y;
+    double tar_abs_position_z;
+    double tar_rel_position_x;
+    double tar_rel_position_y;
+    double tar_rel_position_z;
 
 private:
     Ui::Widget *ui;
 
 public slots:
     void onTimerOut();
+private slots:
+    void on_pushButton_savedata_clicked();
 };
 
 #endif // WIDGET_H
