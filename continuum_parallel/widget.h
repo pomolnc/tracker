@@ -32,13 +32,24 @@ public:
    void drawImage();
    void drawCircle(QImage* img,double x,double y);
    void drawText(QImage* img, double x, double y, int num);
+   void displayData();
+   double filter(double input);
+   void filterProcess();
+   double targetPosition();
+   double basePosition();
+   double vecLen(double x1,double y1,double z1,double x2,double y2,double z2);
+
 
     unsigned char **addrL,**addrR,**addrM;
     Processing *process;
     QTimer *timer;
+
     double* pointX=new double[100];
     double* pointY=new double[100];
     double* pointZ=new double[100];
+    int PointNum;
+    double* basePoint=new double[3];
+    double* targetPoint=new double[3];
 
 private:
     Ui::Widget *ui;

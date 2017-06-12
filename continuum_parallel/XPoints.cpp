@@ -73,6 +73,9 @@ int XPoints::processFrame(MCamera *cam)
 	} else {
 		camHandle = cam->Handle();
 	}
-
-	return XPoints_ProcessFrame(camHandle);
+    ////
+XPoints_AutoAdjustCameraExposureSet(false);
+////
+///
+return XPoints_ProcessFrame(camHandle);
 }
