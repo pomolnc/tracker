@@ -81,13 +81,18 @@ Xform3D* Marker2CurrCameraXf = NULL;
         XP = new MTXPoint(xpointsCollection->itemI(XPNum));
         XP->Position2D(&x[0], &y[0], &x[1], &y[1], &x[2], &y[2]);
         XP->Position3D(&x3, &y3, &z3);
+
+        positionX[XPNum]=x3;
+        positionY[XPNum]=y3;
+        positionZ[XPNum]=z3;
+
         XP->setIndex(XPNum);
 
 //        drawCircle(0, x[0], y[0], radius, 1.0, 0, 0, 0xFFFF);
         drawCircle(&imgL,x[0], y[0]);
         drawCircle(&imgR,x[1], y[1]);
 //        drawCircle(&imgM,x[2], y[2]);
-//        cout<<x[2]<<' '<<y[2]<<endl;//the  XY-Component of the 2D back projected XP on middle image is allways zero.
+//        cout<<x[2]<<' '<<y[2]<<endl;//the XY-Component of the 2D back projected XP on middle image is allways zero.
         drawText(&imgL,x[0], y[0],XPNum);
         drawText(&imgR,x[1], y[1],XPNum);
     }
@@ -123,9 +128,9 @@ void Widget::drawText(QImage* img,double x,double y,int num){
 
     QString strNum;
     QString text="#"+strNum.setNum(num);
-     QByteArray ba= text.toLatin1();
-     const char *c_text = ba.data();
-     painter.drawText(x+10,y+5,tr(c_text));
+    QByteArray ba= text.toLatin1();
+    const char *c_text = ba.data();
+    painter.drawText(x+10,y+5,tr(c_text));
 
 }
 

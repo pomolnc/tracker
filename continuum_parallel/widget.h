@@ -36,6 +36,9 @@ public:
     unsigned char **addrL,**addrR,**addrM;
     Processing *process;
     QTimer *timer;
+    double* pointX=new double[100];
+    double* pointY=new double[100];
+    double* pointZ=new double[100];
 
 private:
     Ui::Widget *ui;
