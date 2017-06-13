@@ -1,5 +1,6 @@
 # ClaroNav MicronTracker
 仅限于RIIlab内部使用。
+请注意，有两个branch. master中的代码是通用的，另一个是根据自己需求编写的。
 
 ## 基本代码
 使用自带的MTDemoCPP中提供的库，删除flkt与openGL等GUI相关的部分。重点调用的是XPoint相关的函数，用以提取特征点的相关坐标。具体操作可查看API说明。
