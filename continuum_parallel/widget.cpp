@@ -113,7 +113,7 @@ PointNum=xpointsCollection->count();
 
 void Widget::drawCircle(QImage* img,double x,double y){
     QPainter painter(img);
-    QPen pen(Qt::green,4,Qt::SolidLine);
+    QPen pen(Qt::red,4,Qt::SolidLine);
     painter.setPen(pen);
     double radius= 15;
     painter.drawEllipse(x-radius/2,y-radius/2,radius,radius);
@@ -122,7 +122,7 @@ void Widget::drawCircle(QImage* img,double x,double y){
 void Widget::drawText(QImage* img,double x,double y,int num){
     QPainter painter(img);
 //    QPen pen(Qt::green,2,Qt::SolidLine);
-    QPen pen(Qt::green,2);
+    QPen pen(Qt::red,2);
     painter.setPen(pen);
 //    double radius= 20;
 //    QRectF rect(x+2, y, 200 ,300 );
