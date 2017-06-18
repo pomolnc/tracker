@@ -222,23 +222,30 @@ void Widget::displayData(){
 
 void Widget::filterProcess(){
     for (int i=1;i<=10;i++){
-        pointX[i]=filter(pointX[i]);
-        pointY[i]=filter(pointY[i]);
-        pointZ[i]=filter(pointZ[i]);
+//        pointX[i]=filter(pointX[i]);
+//        pointY[i]=filter(pointY[i]);
+//        pointZ[i]=filter(pointZ[i]);
+        pointX[i]=filter(pointX[i],&bufferX[0][i-1]);
+        pointY[i]=filter(pointY[i],&bufferY[0][i-1]);
+        pointZ[i]=filter(pointZ[i],&bufferZ[0][i-1]);
     }
 }
 
-double Widget::filter(double input)
+double Widget::filter(double input,double &arr)
 {
-    double array[10];
-    for (int i=10;i>=1;i=i-1)
+//    double array[10];
+    double *array;
+    array=&arr;
+    for (int i=9;i>=0;i=i-1)
     {
-        if (i=1)
-           {array[i]=input;}
+        if (i=0)
+//           {array[i]=input;}
+            {*(array+i)=input;}
         else
-           {array[i]=array[i-1];}
+//           {array[i]=array[i-1];}
+            {*(array+i)=*(array+i-1);}
     }
-    return (array[10]+array[9]+array[8]+array[7]+array[6]+array[5]+array[4]+array[3]+array[2]+array[1])/10;
+    return (*(array+9)+*(array+8)+*(array+7)+*(array+6)+*(array+5)+*(array+4)+*(array+3)+*(array+2)+*(array+1)+*(array))/10;
 }
 
 void Widget::targetPosition(){

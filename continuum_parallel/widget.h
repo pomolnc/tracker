@@ -34,7 +34,8 @@ public:
    void drawCircle(QImage* img,double x,double y);
    void drawText(QImage* img, double x, double y, int num);
    void displayData();
-   double filter(double input);
+//   double filter(double input);
+   double filter(double input,double &arr);
    void filterProcess();
    void targetPosition();
    void basePosition();
@@ -59,6 +60,9 @@ public:
     double tar_rel_position_y;
     double tar_rel_position_z;
 
+    double bufferX[10][10];
+    double bufferY[10][10];
+    double bufferZ[10][10];
 private:
     Ui::Widget *ui;
 
